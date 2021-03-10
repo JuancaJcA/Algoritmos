@@ -71,13 +71,16 @@ $("#johnson").click(function () {
 
 // Save Json
 $("#save").click(function () {
-  var json = paper.project.activeLayer.exportJSON();
-  var svg = paper.project.activeLayer.exportSVG();
+  var json = {
+    nodes: nodes,
+    arrows: arrows,
+  };
+
   var name;
   while (!valueIsEmpty(name)) {
     name = prompt("File name:");
   }
-  downloadJson(json, name);
+  downloadJson(JSON.stringify(json), name);
 });
 
 function downloadJson(exportObj, exportName) {
@@ -90,31 +93,112 @@ function downloadJson(exportObj, exportName) {
   nodes.remove();
 }
 
-// $("#import").click(function () {
-//   var json = localStorage.getItem("oncjson");
-//   paper.project.activeLayer.importJSON(json);
-//   paper.project.view.update();
-// });
-
-// jsonFile.onchange = function(event) {
-//   var json = event.target.files;
-//   paper.project.activeLayer.importJSON(json);
-//   paper.project.view.update();
-// }
-
 // Import Json
 $("#import").change(function (event) {
   var reader = new FileReader();
-  
+  var importedNodes;
+  var importedArrows;
+  nodes = [];
+  arrows = [];
+  paper.project.clear();
+
   reader.onload = function (event) {
-    project.clear();
     var jsonObj = JSON.parse(event.target.result);
-    //paper.project.activeLayer.importJSON(jsonObj);
-    //paper.project.view.update();
-    //paper.project.importJSON(jsonObj);
-    project.importJSON(jsonObj);
+    importedNodes = jsonObj["nodes"];
+    importedArrows = jsonObj["arrows"];
+
+    for (var i = 0; i < importedNodes.length; i++) {
+      var myNom = importedNodes[i].nom;
+      /*var myCircle = paper.project.activeLayer.importJSON(
+        importedNodes[i].circle
+      );*/
+      var myCircle = new Path.Circle(importedNodes[i].circle[1]);
+      myCircle.fillColor = "#333333";
+      var textIt = paper.project.activeLayer.importJSON(importedNodes[i].text);
+
+      myCircle.onMouseDrag = function (event1) {
+        var pos = getNodo(event1.point);
+        if (currentTool === "move") {
+          nodes[pos].circle.position = event1.point;
+          nodes[pos].text.position = new Point(
+            event1.point.x,
+            event1.point.y - 45
+          );
+        }
+      };
+      //rename node
+      myCircle.onMouseDown = function (event1) {
+        if (currentTool === "rename") {
+          // Rename Node
+          var newText;
+          while (!valueIsEmpty(newText)) {
+            newText = prompt("Rename node:");
+          }
+          var pos = getNodo(event1.point);
+          nodes[pos].text.content = newText;
+          var oldText = nodes[pos].nom;
+          nodes[pos].nom = newText;
+          reorganizeArrows(newText, oldText);
+        }
+      };
+
+      myCircle.onDoubleClick = function (event1) {
+        if (currentTool === "add") {
+          if (mod1 < 0 && mod2 < 0) {
+            mod1 = getNodo(event1.point);
+            nodes[mod1].circle.fillColor = "#585858";
+          } else if (mod1 >= 0 && mod2 < 0) {
+            mod2 = getNodo(event1.point);
+            generarFlecha(mod1, mod2);
+            nodes[mod1].circle.fillColor = "#333333";
+            mod1 = -1;
+            mod2 = -1;
+          }
+        }
+      };
+      // Create Node Object
+      var nodeOb = new nodo(myNom, textIt, myCircle);
+      nodes.push(nodeOb);
+    }
+
+    for (var i = 0; i < importedArrows.length; i++) {
+      var myAttr = importedArrows[i].attr;
+      var myPath = paper.project.activeLayer.importJSON(importedArrows[i].path);
+      var myPath2 = paper.project.activeLayer.importJSON(
+        importedArrows[i].path2
+      );
+      var myText = paper.project.activeLayer.importJSON(importedArrows[i].text);
+      var myInit = importedArrows[i].init;
+      var myEnd = importedArrows[i].end;
+
+      myPath.onMouseDown = function (event1) {
+        if (currentTool === "delete") {
+          deleteArrow(event1);
+        }
+      };
+
+      myText.onMouseDown = function (event1) {
+        if (currentTool === "rename") {
+          // Edge New Attribute
+          var newText;
+          while (!valueIsEmpty(newText)) {
+            newText = prompt("Enter the new value:");
+          }
+          var pos = getFlecha(event1.point);
+          arrows[pos].text.content = newText;
+          arrows[pos].attr = newText;
+        } else if (currentTool === "delete") {
+          deleteArrow(event1);
+        }
+      };
+
+      // Create Arrow Object
+      var arrowObj = new flecha(myAttr, myText, myPath, myPath2, myInit, myEnd);
+      arrows.push(arrowObj);
+    }
   };
   reader.readAsText(event.target.files[0]);
+  paper.project.view.update();
 });
 
 // Matrix.
@@ -189,6 +273,8 @@ $("#matrix").click(function () {
 
   $("#metaConfigTable").empty();
   $("#metaConfigTable").append(tabelajzing(matrix));
+  console.log(nodes);
+  console.log(arrows);
 });
 
 // Main Function.
@@ -485,7 +571,7 @@ function changeColor(route) {
       if (route[j].nom == nodes[i].nom) {
         tot = eval(route[j].izq) - eval(route[j].der);
         if (tot == 0) {
-          nodes[i].circle.fillColor = "blue;";
+          nodes[i].circle.fillColor = "#6d6d6d";
         }
         pos = nodes[i].circle.position;
         var path = new Path.Line(
