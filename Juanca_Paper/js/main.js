@@ -338,12 +338,7 @@ $("#assignment").click(function () {
         }
     }
     solution = lap(nodes.length, newMatrix);
-
-    //$("#metaConfigTable2").empty();
-    //$("#metaConfigTable2").append(tabelajzingAssignment(matrix, solution.col));
     tabelajzingAssignment(matrix, solution.col);
-    document.getElementById("assignmentCost").innerHTML =
-        "Assignment Matrix (Cost: " + solution.cost + ")";
 });
 
 // Main Function.
@@ -643,6 +638,7 @@ function tabelajzingAssignment(a, b) {
 
     var tr = "";
     var f = 0;
+    var cost = 0;
     for (var i = 0; i < a.length; i++) {
         var arr = a[i];
         tr += "<tr>";
@@ -661,6 +657,7 @@ function tabelajzingAssignment(a, b) {
                         // console.log("b[f-1]: " + b[f - 1]);
                         // console.log("color");
                         tr += "<td bgcolor=#eeeeee>(" + arr[c] + ")</td>";
+                        cost += parseInt(arr[c]);
                     } else {
                         tr += "<td>" + arr[c] + "</td>";
                     }
@@ -671,6 +668,8 @@ function tabelajzingAssignment(a, b) {
         f += 1;
     }
     table.innerHTML += tr;
+    document.getElementById("assignmentCost").innerHTML =
+        "Assignment Matrix (Cost: " + cost + ")";
 }
 
 // Change color for Johnson Algorithm
