@@ -48,14 +48,6 @@ td {
   table-layout: fixed;
 }
 
-td:last-child {
-  background: #eeeeee;
-}
-
-tr:last-child {
-  background: #eeeeee;
-}
-
 ul {
   margin: 0 auto;
 }

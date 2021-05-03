@@ -1,81 +1,111 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <!-- Title -->
-    <title>MyNODES</title>
-    <!-- Css Style -->
-    <link rel="stylesheet" href="css/styles.css" />
-    <!-- Font -->
-    <link
-      href="http://fonts.googleapis.com/css?family=Lato:400,700"
-      rel="stylesheet"
-      type="text/css"
-    />
+    <head>
+        <!-- Title -->
+        <title>MyNODES</title>
+        <!-- Css Style -->
+        <link rel="stylesheet" href="css/styles.css" />
+        <!-- Font -->
+        <link
+            href="http://fonts.googleapis.com/css?family=Lato:400,700"
+            rel="stylesheet"
+            type="text/css"
+        />
 
-    <!-- Scripts -->
-    <script type="text/paperscript" src="js/main.js" canvas="myCanvas"></script>
-    <script type="text/javascript" src="js/paper-full.js"></script>
-    <script src="js/jquery-3.4.1.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
-    <script src="js/johnson.js"></script>
-    <script src="js/binaryTree.js"></script>
-    <!-- Links -->
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css"
-    />
-  </head>
-  <body>
-    <!-- Header -->
-    <div class="header">
-      <div class="logo_container">
-        <img src="img/logo.png" alt="logo" />
-        <h1>MY<span>NODES</span></h1>
+        <!-- Scripts -->
+        <script
+            type="text/paperscript"
+            src="js/main.js"
+            canvas="myCanvas"
+        ></script>
+        <script type="text/javascript" src="js/paper-full.js"></script>
+        <script src="js/jquery-3.4.1.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+        <script src="js/johnson.js"></script>
+        <script src="js/binaryTree.js"></script>
+        <script src="js/assignment.js"></script>
+        <!-- Links -->
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css"
+        />
+    </head>
+    <body>
+        <!-- Header -->
+        <div class="header">
+            <div class="logo_container">
+                <img src="img/logo.png" alt="logo" />
+                <h1>MY<span>NODES</span></h1>
 
-        <!-- Menu Items -->
-        <li id="item">
-          <span>
-            <a href="#" id="add" class="selected">Add</a>
-          </span>
-          <span>
-            <a href="#" id="delete">Delete</a>
-          </span>
-          <span>
-            <a href="#" id="move">Move</a>
-          </span>
-          <span>
-            <a href="#" id="rename">Rename</a>
-          </span>
-          <span>
-            <a href="#" id="johnson">Johnson</a>
-          </span>
-          <span>
-            <a href="trees.html" id="preorden">Trees</a>
-          </span>
-          <span>
-            <a href="#ex1" id="matrix" rel="modal:open">Matrix</a>
-          </span>
-          <span>
-            <a href="#" id="save">Save</a>
-          </span>
-          <span>
-            <label>
-              Import
-              <input type="file" id="import" style="visibility: hidden" accept=".json" />
-            </label>
-          </span>
-        </li>
-      </div>
-    </div>
+                <!-- Menu Items -->
+                <li id="item">
+                    <span>
+                        <a href="#" id="add" class="selected">Add</a>
+                    </span>
+                    <span>
+                        <a href="#" id="delete">Delete</a>
+                    </span>
+                    <span>
+                        <a href="#" id="move">Move</a>
+                    </span>
+                    <span>
+                        <a href="#" id="rename">Rename</a>
+                    </span>
+                    <span>
+                        <a href="#" id="johnson">Johnson</a>
+                    </span>
+                    <span>
+                        <a href="trees.html" id="preorden">Trees</a>
+                    </span>
+                    <span>
+                        <a href="#ex2" id="assignment" rel="modal:open">
+                            Assignment
+                        </a>
+                    </span>
+                    <span>
+                        <a href="#ex1" id="matrix" rel="modal:open">Matrix</a>
+                    </span>
+                    <span>
+                        <a href="#" id="save">Save</a>
+                    </span>
+                    <span>
+                        <label>
+                            Import
+                            <input
+                                type="file"
+                                id="import"
+                                style="visibility: hidden"
+                                accept=".json"
+                            />
+                        </label>
+                    </span>
+                </li>
+            </div>
+        </div>
 
-    <!-- Matrix -->
-    <div id="ex1" class="modal">
-      <p style="font-size: 25px">Matriz</p>
-      <p style="font-size: 25px; color: #fff">-</p>
-      <table id="metaConfigTable"></table>
-    </div>
+        <!-- Matrix -->
+        <div id="ex1" class="modal">
+            <p style="font-size: 25px">Matrix</p>
+            <p style="font-size: 25px; color: #fff">-</p>
+            <table id="metaConfigTable"></table>
+            <style>
+                #metaConfigTable td:last-child {
+                    background: #eeeeee;
+                }
 
-    <!-- Canvas -->
-    <canvas id="myCanvas" resize></canvas>
-  </body>
+                #metaConfigTable tr:last-child {
+                    background: #eeeeee;
+                }
+            </style>
+        </div>
+        <!-- Matrix -->
+        <div id="ex2" class="modal">
+            <p id="assignmentCost" style="font-size: 25px">Assignment Matriz</p>
+            <p style="font-size: 25px; color: #fff">-</p>
+            <table id="metaConfigTable2"></table>
+        </div>
+
+        <!-- Canvas -->
+        <canvas id="myCanvas" resize></canvas>
+    </body>
 </html>
