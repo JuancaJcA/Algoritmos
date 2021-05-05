@@ -15,8 +15,8 @@
         <!-- Scripts -->
         <script
             type="text/paperscript"
-            src="js/main.js"
-            canvas="myCanvas"
+            src="js/mainCompet.js"
+            canvas="myCanvas1"
         ></script>
         <script type="text/javascript" src="js/paper-full.js"></script>
         <script src="js/jquery-3.4.1.js"></script>
@@ -40,75 +40,60 @@
                 <!-- Menu Items -->
                 <li id="item">
                     <span>
-                        <a href="#" id="add" class="selected">Add</a>
+                        <a href="#" id="add1" class="selected">Add</a>
                     </span>
                     <span>
-                        <a href="#" id="delete">Delete</a>
+                        <a href="#" id="delete1">Delete</a>
                     </span>
                     <span>
-                        <a href="#" id="move">Move</a>
+                        <a href="#" id="move1">Move</a>
                     </span>
                     <span>
-                        <a href="#" id="rename">Rename</a>
+                        <a href="#" id="rename1">Rename</a>
                     </span>
                     <span>
-                        <a href="#ex2" id="assignment" rel="modal:open">
-                            Assignment
-                        </a>
+                        <a href="#ex3" id="matrix1" rel="modal:open">Matrix</a>
                     </span>
                     <span>
-                        <a href="compet.html" id="compet">Compet</a>
+                        <a href="#" id="compet">Calculate</a>
                     </span>
+                    
                     <span>
-                        <a href="#" id="johnson">Johnson</a>
-                    </span>
-                    <span>
-                        <a href="#ex1" id="matrix" rel="modal:open">Matrix</a>
-                    </span>
-                    <span>
-                        <a href="trees.html" id="preorden">Trees</a>
-                    </span>
-                    <span>
-                        <a href="#" id="save">Save</a>
+                        <a href="#" id="save1">Save</a>
                     </span>
                     <span>
                         <label>
                             Import
                             <input
                                 type="file"
-                                id="import"
+                                id="import1"
                                 style="visibility: hidden"
                                 accept=".json"
                             />
                         </label>
                     </span>
+                    <span>
+                        <a id="resultCompet"></a>
+                    </span>
                 </li>
             </div>
         </div>
-
         <!-- Matrix -->
-        <div id="ex1" class="modal">
+        <div id="ex3" class="modal">
             <p style="font-size: 25px">Matrix</p>
             <p style="font-size: 25px; color: #fff">-</p>
-            <table id="metaConfigTable"></table>
+            <table id="metaConfigTable3"></table>
             <style>
-                #metaConfigTable td:last-child {
+                #metaConfigTable3 td:last-child {
                     background: #eeeeee;
                 }
 
-                #metaConfigTable tr:last-child {
+                #metaConfigTable3 tr:last-child {
                     background: #eeeeee;
                 }
             </style>
         </div>
-        <!-- Matrix -->
-        <div id="ex2" class="modal">
-            <p id="assignmentCost" style="font-size: 25px">Assignment Matrix</p>
-            <p style="font-size: 25px; color: #fff">-</p>
-            <table id="metaConfigTable2"></table>
-        </div>
-
         <!-- Canvas -->
-        <canvas id="myCanvas" resize></canvas>
+        <canvas id="myCanvas1" resize></canvas>
     </body>
 </html>
