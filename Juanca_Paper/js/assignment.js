@@ -273,39 +273,40 @@ function lap(dim, cost) {
 }
 
 function lapMax(dim, matrix) {
-    console.log("Dim: ", dim);
-    console.log("matrix: ", matrix);
     // matrix = [
-    //     [10, 10, 10, 10],
-    //     [2, 2, 2, 2],
-    //     [3, 3, 3, 3],
+    //     [0, 0, 10, 10],
+    //     [0, 0, 0, 0],
+    //     [0, 100, 0, 100],
     // ];
     console.log("Matrix: ", matrix);
     var result = [];
+    var c = 0;
 
     for (var i = 0; i < matrix.length; i++) {
         var arr = [];
         for (var j = 0; j < dim + 1; j++) {
-            console.log(matrix[i][j]);
             arr.push(matrix[i][j]);
         }
 
         var max = arr[0];
         var arrPos = 0;
-        for (var j = 1; j < arr.length; j++) {
-            if (max < arr[j]) {
-                arrPos++;
-                max = arr[j];
-                if (result.includes(arrPos)) {
-                    arrPos++;
-                    max = arr[j + 1];
-                    j++;
+        for (var j = 0; j < matrix.length; j++) {
+            console.log("c: ", c);
+            if (c == 0) {
+                if (max < arr[j]) {
+                    arrPos = j;
+                    max = arr[j];
+                }
+            } else {
+                if (result.includes(j) == false) {
+                    arrPos = j;
                 }
             }
         }
-        console.log("Max: ", max);
         console.log("Pos: ", arrPos);
         result.push(arrPos);
+        console.log("Result", result);
+        c++;
     }
 
     return result;
