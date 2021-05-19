@@ -72,7 +72,6 @@ $("#move").click(function () {
 // Johnnson.
 $("#johnson").click(function () {
     var ruta = johnsonAlgorithm(arrows, nodes);
-    console.log(ruta);
     changeColor(ruta);
 });
 
@@ -296,7 +295,7 @@ $("#matrix").click(function () {
 });
 
 // Assignment.
-$("#assignment").click(function () {
+$("#assignmentMin").click(function () {
     var longitud = nodes.length;
     var matrix = [];
     var filcol = [""];
@@ -319,7 +318,6 @@ $("#assignment").click(function () {
     for (var i = 0; i < arrows.length; i++) {
         var ini = arrows[i].init;
         var fin = arrows[i].end;
-        //console.log(arrows[i].end == matrix[0][2]);
         var lon = nodes.length;
         for (var j = 1; j < lon + 1; j++) {
             if (matrix[0][j] == fin) {
@@ -332,6 +330,7 @@ $("#assignment").click(function () {
         }
     }
 
+    // Create new Matrix
     var newMatrix = [];
     for (var i = 0; i < matrix.length; i++) {
         if (i != 0) {
@@ -344,8 +343,222 @@ $("#assignment").click(function () {
             newMatrix.push(fil);
         }
     }
-    solution = lap(nodes.length, newMatrix);
-    tabelajzingAssignment(matrix, solution.col);
+
+    // Sum Rows and Columns
+    var RowsArray = [];
+    var ColsArray = [];
+    var RowsArray1 = [1];
+    var ColsArray1 = [1];
+    for (var i = 0; i < newMatrix.length; i++) {
+        var pattern = /^\d+$/;
+        var rSum = 0;
+        var cSum = 0;
+        for (var j = 0; j < newMatrix.length; j++) {
+            if (pattern.test(newMatrix[i][j])) {
+                rSum += parseFloat(newMatrix[i][j]);
+            }
+
+            if (pattern.test(newMatrix[j][i])) {
+                cSum += parseFloat(newMatrix[j][i]);
+            }
+        }
+        RowsArray.push(rSum);
+        ColsArray.push(cSum);
+        RowsArray1.push(rSum);
+        ColsArray1.push(cSum);
+    }
+
+    // Delete all 0 from matrix (Strings)
+    console.log(matrix);
+    var noCeroRow1 = [];
+    for (var i = 0; i < RowsArray1.length; i++) {
+        var arr = [];
+        if (RowsArray1[i] != 0) {
+            for (var j = 0; j < RowsArray1.length; j++) {
+                arr.push(matrix[i][j]);
+            }
+        }
+        if (arr.length != 0) {
+            noCeroRow1.push(arr);
+        }
+    }
+
+    var noCeroMatrix1 = [];
+    for (var i = 0; i < noCeroRow1.length; i++) {
+        var arr = [];
+        for (var j = 0; j < ColsArray1.length; j++) {
+            if (ColsArray1[j] != 0) {
+                arr.push(noCeroRow1[i][j]);
+            }
+        }
+        if (arr.length != 0) {
+            noCeroMatrix1.push(arr);
+        }
+    }
+
+    // Delete all 0 from matrix (Values)
+    var noCeroRow = [];
+    for (var i = 0; i < RowsArray.length; i++) {
+        var arr = [];
+        if (RowsArray[i] != 0) {
+            for (var j = 0; j < RowsArray.length; j++) {
+                arr.push(newMatrix[i][j]);
+            }
+        }
+        if (arr.length != 0) {
+            noCeroRow.push(arr);
+        }
+    }
+
+    var noCeroMatrix = [];
+    for (var i = 0; i < noCeroRow.length; i++) {
+        var arr = [];
+        for (var j = 0; j < ColsArray.length; j++) {
+            if (ColsArray[j] != 0) {
+                arr.push(noCeroRow[i][j]);
+            }
+        }
+        if (arr.length != 0) {
+            noCeroMatrix.push(arr);
+        }
+    }
+
+    solution = lap(noCeroMatrix.length, noCeroMatrix);
+    console.log(solution);
+    tabelajzingAssignment(noCeroMatrix1, solution.col);
+});
+
+// Assignment.
+$("#assignmentMax").click(function () {
+    var longitud = nodes.length;
+    var matrix = [];
+    var filcol = [""];
+    for (var i = 0; i < nodes.length; i++) {
+        filcol.push(nodes[i].nom);
+    }
+    matrix.push(filcol);
+    for (var i = 0; i < longitud; i++) {
+        var fila = [];
+        for (var j = 0; j < longitud + 1; j++) {
+            if (j === 0) {
+                fila.push(nodes[i].nom);
+            } else {
+                fila.push("0");
+            }
+        }
+        matrix.push(fila);
+    }
+
+    for (var i = 0; i < arrows.length; i++) {
+        var ini = arrows[i].init;
+        var fin = arrows[i].end;
+        var lon = nodes.length;
+        for (var j = 1; j < lon + 1; j++) {
+            if (matrix[0][j] == fin) {
+                for (var k = 1; k < lon + 1; k++) {
+                    if (matrix[k][0] == ini) {
+                        matrix[k][j] = arrows[i].attr;
+                    }
+                }
+            }
+        }
+    }
+
+    // Create new Matrix
+    var newMatrix = [];
+    for (var i = 0; i < matrix.length; i++) {
+        if (i != 0) {
+            fil = [];
+            for (j = 0; j < matrix[i].length; j++) {
+                if (j != 0) {
+                    fil.push(parseInt(matrix[i][j]));
+                }
+            }
+            newMatrix.push(fil);
+        }
+    }
+
+    // Sum Rows and Columns
+    var RowsArray = [];
+    var ColsArray = [];
+    var RowsArray1 = [1];
+    var ColsArray1 = [1];
+    for (var i = 0; i < newMatrix.length; i++) {
+        var pattern = /^\d+$/;
+        var rSum = 0;
+        var cSum = 0;
+        for (var j = 0; j < newMatrix.length; j++) {
+            if (pattern.test(newMatrix[i][j])) {
+                rSum += parseFloat(newMatrix[i][j]);
+            }
+
+            if (pattern.test(newMatrix[j][i])) {
+                cSum += parseFloat(newMatrix[j][i]);
+            }
+        }
+        RowsArray.push(rSum);
+        ColsArray.push(cSum);
+        RowsArray1.push(rSum);
+        ColsArray1.push(cSum);
+    }
+
+    // Delete all 0 from matrix (Strings)
+    console.log(matrix);
+    var noCeroRow1 = [];
+    for (var i = 0; i < RowsArray1.length; i++) {
+        var arr = [];
+        if (RowsArray1[i] != 0) {
+            for (var j = 0; j < RowsArray1.length; j++) {
+                arr.push(matrix[i][j]);
+            }
+        }
+        if (arr.length != 0) {
+            noCeroRow1.push(arr);
+        }
+    }
+
+    var noCeroMatrix1 = [];
+    for (var i = 0; i < noCeroRow1.length; i++) {
+        var arr = [];
+        for (var j = 0; j < ColsArray1.length; j++) {
+            if (ColsArray1[j] != 0) {
+                arr.push(noCeroRow1[i][j]);
+            }
+        }
+        if (arr.length != 0) {
+            noCeroMatrix1.push(arr);
+        }
+    }
+
+    // Delete all 0 from matrix (Values)
+    var noCeroRow = [];
+    for (var i = 0; i < RowsArray.length; i++) {
+        var arr = [];
+        if (RowsArray[i] != 0) {
+            for (var j = 0; j < RowsArray.length; j++) {
+                arr.push(newMatrix[i][j]);
+            }
+        }
+        if (arr.length != 0) {
+            noCeroRow.push(arr);
+        }
+    }
+
+    var noCeroMatrix = [];
+    for (var i = 0; i < noCeroRow.length; i++) {
+        var arr = [];
+        for (var j = 0; j < ColsArray.length; j++) {
+            if (ColsArray[j] != 0) {
+                arr.push(noCeroRow[i][j]);
+            }
+        }
+        if (arr.length != 0) {
+            noCeroMatrix.push(arr);
+        }
+    }
+
+    solution = lapMax(noCeroMatrix.length, noCeroMatrix);
+    tabelajzingAssignmentMax(noCeroMatrix1, solution.col);
 });
 
 // Main Function.
@@ -639,7 +852,6 @@ function tabelajzing(a) {
 }
 
 function tabelajzingAssignment(a, b) {
-    console.log(b);
     var table = document.getElementById("metaConfigTable2");
     table.innerHTML = "";
 
@@ -676,6 +888,46 @@ function tabelajzingAssignment(a, b) {
     }
     table.innerHTML += tr;
     document.getElementById("assignmentCost").innerHTML =
+        "Assignment Matrix (Cost: " + cost + ")";
+}
+
+function tabelajzingAssignmentMax(a, b) {
+    var table = document.getElementById("metaConfigTable3");
+    table.innerHTML = "";
+
+    var tr = "";
+    var f = 0;
+    var cost = 0;
+    for (var i = 0; i < a.length; i++) {
+        var arr = a[i];
+        tr += "<tr>";
+        for (var c = 0; c < arr.length; c++) {
+            if (f === 0) {
+                tr += "<td>" + arr[c] + "</td>";
+            } else {
+                if (c === 0) {
+                    tr += "<td>" + arr[c] + "</td>";
+                } else {
+                    // console.log("arr: " + arr[c]);
+                    // console.log("f: " + (f - 1));
+                    // console.log("b[c-1]: " + b[c - 1]);
+                    if (c - 1 == b[f - 1]) {
+                        // console.log("c: " + (c - 1));
+                        // console.log("b[f-1]: " + b[f - 1]);
+                        // console.log("color");
+                        tr += "<td bgcolor=#eeeeee>(" + arr[c] + ")</td>";
+                        cost += parseInt(arr[c]);
+                    } else {
+                        tr += "<td>" + arr[c] + "</td>";
+                    }
+                }
+            }
+        }
+        tr += "</tr>";
+        f += 1;
+    }
+    table.innerHTML += tr;
+    document.getElementById("assignmentCost3").innerHTML =
         "Assignment Matrix (Cost: " + cost + ")";
 }
 
