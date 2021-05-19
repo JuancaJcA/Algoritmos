@@ -42,6 +42,12 @@ $("#delete").click(function () {
     $("#add").removeClass();
     $("#rename").removeClass();
     $("#move").removeClass();
+
+    matrizCramer = [[3,1,7,4],[2,6,5,9],[8,3,3,2]]
+    demanda = [250,350,400,200]
+    oferta = [300,400,500]
+
+    transporte(matrizCramer,demanda,oferta);
 });
 
 // Rename.
