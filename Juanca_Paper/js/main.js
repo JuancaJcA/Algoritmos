@@ -557,7 +557,7 @@ $("#assignmentMax").click(function () {
     }
 
     solution = lapMax(noCeroMatrix.length, noCeroMatrix);
-    tabelajzingAssignmentMax(noCeroMatrix1, solution.col);
+    tabelajzingAssignmentMax(noCeroMatrix1, solution);
 });
 
 // Main Function.
