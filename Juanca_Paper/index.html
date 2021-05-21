@@ -43,8 +43,13 @@
                     <span>
                         <a href="#" id="add" class="selected">Add</a>
                     </span>
-                    <span>
+                    <!-- <span>
                         <a href="#" id="delete">Delete</a>
+                    </span> -->
+                    <span>
+                        <a href="#exCramer" id="delete" rel="modal:open"
+                            >Delete</a
+                        >
                     </span>
                     <span>
                         <a href="#" id="move">Move</a>
@@ -119,9 +124,27 @@
 
         <!-- Matrix -->
         <div id="ex3" class="modal">
-            <p id="assignmentCost3" style="font-size: 25px">Assignment Matrix</p>
+            <p id="assignmentCost3" style="font-size: 25px">
+                Assignment Matrix
+            </p>
             <p style="font-size: 25px; color: #fff">-</p>
             <table id="metaConfigTable3"></table>
+        </div>
+
+        <!-- Matrix -->
+        <div id="exCramer" class="modal">
+            <p id="matrixCramer" style="font-size: 25px">Cramer</p>
+            <p style="font-size: 25px; color: #fff">-</p>
+            <table id="metaConfigTableCramer"></table>
+            <style>
+                #metaConfigTableCramer td:first-child {
+                    background: #eeeeee;
+                }
+
+                #metaConfigTableCramer tr:first-child {
+                    background: #eeeeee;
+                }
+            </style>
         </div>
 
         <!-- Canvas -->
