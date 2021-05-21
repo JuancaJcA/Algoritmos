@@ -274,9 +274,9 @@ function lap(dim, cost) {
 
 function lapMax(dim, matrix) {
     // matrix = [
-    //     [0, 0, 10, 10],
-    //     [0, 0, 0, 0],
-    //     [0, 100, 0, 100],
+    //     [15, 10, 0, 15],
+    //     [0, 80, 0, 0],
+    //     [0, 0, 100, 0],
     // ];
     console.log("Matrix: ", matrix);
     var result = [];
@@ -297,7 +297,7 @@ function lapMax(dim, matrix) {
                     arrPos = j;
                     max = arr[j];
                 }
-            } else {
+            }else {
                 if (result.includes(j) == false) {
                     arrPos = j;
                 }
