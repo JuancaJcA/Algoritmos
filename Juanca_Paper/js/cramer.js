@@ -141,3 +141,7 @@ function getCost(matrix, costs) {
 function clone2D(a) {
     return a.map((o) => [...o]);
 }
+
+$("columns").change(function(){
+    console.log($(this).val())
+});
