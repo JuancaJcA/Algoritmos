@@ -1,106 +1,153 @@
 * {
-  margin: 0;
-  padding: 0;
-  font-family: "Lato", sans-serif;
-  text-decoration: none;
-  font-weight: 200;
+    margin: 0;
+    padding: 0;
+    font-family: "Lato", sans-serif;
+    text-decoration: none;
+    font-weight: 200;
 }
 
 a {
-  color: whitesmoke;
-  font-size: 25px;
-  font-family: "Lato", sans-serif;
-  font-weight: 100;
+    color: whitesmoke;
+    font-size: 25px;
+    font-family: "Lato", sans-serif;
+    font-weight: 100;
 }
 
 body {
-  background-color: whitesmoke;
+    background-color: whitesmoke;
 }
 
 canvas {
-  width: 100%;
-  height: 100%;
+    width: 100%;
+    height: 100%;
 }
 
 li span {
-  margin-left: 20px;
-  margin-right: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
 }
 
 p {
-  text-align: center;
+    text-align: center;
 }
 
 table {
-  border-collapse: collapse;
-  display: table;
-  margin: 0 auto;
-  padding: 10px;
-  table-layout: fixed;
-  width: 100%;
+    border-collapse: collapse;
+    display: table;
+    margin: 0 auto;
+    padding: 10px;
+    table-layout: fixed;
+    width: 100%;
 }
 
 table,
 th,
 td {
-  border: 0.1px solid black;
-  text-align: center;
-  table-layout: fixed;
+    border: 0.1px solid black;
+    text-align: center;
+    table-layout: fixed;
 }
 
 ul {
-  margin: 0 auto;
+    margin: 0 auto;
 }
 
 label {
-  color: whitesmoke;
-  font-size: 25px;
-  font-family: "Lato", sans-serif;
-  font-weight: 100;
+    color: whitesmoke;
+    font-size: 25px;
+    font-family: "Lato", sans-serif;
+    font-weight: 100;
 }
 
 .header {
-  width: 100%;
-  height: 80px;
-  background-color: #333333;
-  display: block;
+    width: 100%;
+    height: 80px;
+    background-color: #333333;
+    display: block;
 }
 
 .header img {
-  width: 55px;
-  height: 55px;
-  padding: 10px 15px 10px 10px;
+    width: 55px;
+    height: 55px;
+    padding: 10px 15px 10px 10px;
 }
 
 .logo_container {
-  height: 100%;
-  display: table;
-  float: left;
+    height: 100%;
+    display: table;
+    float: left;
 }
 
 .logo_container h1 {
-  color: whitesmoke;
-  height: 100%;
-  display: table-cell;
-  vertical-align: middle;
-  font-size: 2.35rem;
-  font-weight: lighter;
+    color: whitesmoke;
+    height: 100%;
+    display: table-cell;
+    vertical-align: middle;
+    font-size: 2.35rem;
+    font-weight: lighter;
 }
 
 .logo_container h1 span {
-  font-size: 2.5rem;
-  font-weight: 800;
+    font-size: 2.5rem;
+    font-weight: 800;
 }
 
 .selected {
-  background-color: #585858;
-  border-radius: 4px;
+    background-color: #585858;
+    border-radius: 4px;
 }
 
 #item {
-  display: inline;
-  padding-left: 30px;
-  padding-right: 30px;
-  position: absolute;
-  top: 2.5%;
+    display: inline;
+    padding-left: 30px;
+    padding-right: 30px;
+    position: absolute;
+    top: 2.5%;
+}
+
+.divInputText {
+    width: 1250px;
+    height: 400px;
+}
+.divInputText textarea {
+    resize: none;
+    width: 1250px;
+    height: 380px;
+    border-color: #585858;
+    border-width: 0.1px;
+    color: #333333;
+}
+.divInputText p {
+    text-align: center;
+    line-height: 20px;
+    color: #585858;
+}
+
+.divOutputText {
+    width: 1250px;
+    height: 400px;
+    padding-top: 10px;
+}
+.divOutputText textarea {
+    resize: none;
+    width: 1250px;
+    height: 380px;
+    border-color: #585858;
+    border-width: 0.1px;
+    color: #333333;
+}
+.divOutputText p {
+    text-align: center;
+    line-height: 20px;
+    color: #585858;
+}
+.divTimeText {
+    width: 1250px;
+    height: 20px;
+    padding-top: 10px;
+}
+.divTimeText p {
+    text-align: center;
+    line-height: 20px;
+    color: #585858;
 }

@@ -11,19 +11,15 @@
             rel="stylesheet"
             type="text/css"
         />
-
         <!-- Scripts -->
         <script
             type="text/paperscript"
-            src="js/mainCompet.js"
-            canvas="myCanvas1"
+            src="js/sort.js"
+            canvas="myCanvasSort"
         ></script>
         <script type="text/javascript" src="js/paper-full.js"></script>
         <script src="js/jquery-3.4.1.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
-        <script src="js/johnson.js"></script>
-        <script src="js/binaryTree.js"></script>
-        <script src="js/assignment.js"></script>
         <!-- Links -->
         <link
             rel="stylesheet"
@@ -40,64 +36,68 @@
                 <!-- Menu Items -->
                 <li id="item">
                     <span>
-                        <a href="#" id="add1" class="selected">Add</a>
+                        <a href="#bubble" id="bubble">Bubble Sort</a>
                     </span>
                     <span>
-                        <a href="#" id="delete1">Delete</a>
+                        <a href="#selection" id="selection">Selection Sort</a>
                     </span>
                     <span>
-                        <a href="#" id="move1">Move</a>
+                        <a href="#insertion" id="insertion">Insertion Sort</a>
                     </span>
                     <span>
-                        <a href="#" id="rename1">Rename</a>
+                        <a href="#merge" id="merge">Merge Sort</a>
                     </span>
-                    <!-- <span>
-                        <a href="#ex3" id="matrix1" rel="modal:open">Matrix</a>
-                    </span> -->
                     <span>
-                        <a href="#" id="compet">Calculate</a>
+                        <a href="#quick" id="quick">Quick Sort</a>
                     </span>
-
                     <span>
-                        <a href="sort.html" id="sortAlgorithm">Sort Algorithms</a>
+                        <a href="#heap" id="heap">Heap Sort</a>
                     </span>
-                    
                     <span>
-                        <a href="#" id="save1">Save</a>
+                        <a href="#random" id="heap">Generate Numbers</a>
+                    </span>
+                    <span>
+                        <a href="#" id="saveSort">Save</a>
                     </span>
                     <span>
                         <label>
                             Import
                             <input
                                 type="file"
-                                id="import1"
+                                id="importSort"
                                 style="visibility: hidden"
                                 accept=".json"
                             />
                         </label>
                     </span>
-                    <span>
-                        <a id="resultCompet"></a>
-                    </span>
+                    <div class="divInputText">
+                        <p>Numbers to Sort</p>
+                        <textarea
+                            id="inputTextArea"
+                            name="inputText"
+                            rows="4"
+                            cols="50"
+                        >
+Numbers</textarea
+                        >
+                    </div>
+                    <div class="divOutputText">
+                        <p>Numbers Sorted</p>
+                        <textarea
+                            id="OutputTextArea"
+                            name="OutputText"
+                            rows="4"
+                            cols="50"
+                            disabled="true"
+                        ></textarea>
+                    </div>
+                    <div class="divTimeText">
+                        <p>Time</p>
+                    </div>
                 </li>
             </div>
         </div>
-        <!-- Matrix -->
-        <div id="ex3" class="modal">
-            <p style="font-size: 25px">Matrix</p>
-            <p style="font-size: 25px; color: #fff">-</p>
-            <table id="metaConfigTable3"></table>
-            <style>
-                #metaConfigTable3 td:last-child {
-                    background: #eeeeee;
-                }
-
-                #metaConfigTable3 tr:last-child {
-                    background: #eeeeee;
-                }
-            </style>
-        </div>
         <!-- Canvas -->
-        <canvas id="myCanvas1" resize></canvas>
+        <canvas id="myCanvasSort" resize></canvas>
     </body>
 </html>
