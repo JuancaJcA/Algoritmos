@@ -54,7 +54,7 @@
                         <a href="#heap" id="heap">Heap Sort</a>
                     </span>
                     <span>
-                        <a href="#random" id="heap">Generate Numbers</a>
+                        <a href="#random" id="random">Generate Numbers</a>
                     </span>
                     <span>
                         <a href="#" id="saveSort">Save</a>
@@ -64,9 +64,10 @@
                             Import
                             <input
                                 type="file"
+                                name="importSort"
                                 id="importSort"
                                 style="visibility: hidden"
-                                accept=".json"
+                                accept=".txt"
                             />
                         </label>
                     </span>
@@ -82,17 +83,25 @@ Numbers</textarea
                         >
                     </div>
                     <div class="divOutputText">
-                        <p>Numbers Sorted</p>
+                        <p>Numbers Sorted Ascending</p>
                         <textarea
-                            id="OutputTextArea"
-                            name="OutputText"
+                            id="OutputTextAreaAscending"
+                            name="OutputTextAscending"
+                            rows="4"
+                            cols="50"
+                            disabled="true"
+                        ></textarea>
+                        <p>Numbers Sorted Descending</p>
+                        <textarea
+                            id="OutputTextAreaDescending"
+                            name="OutputTextDescending"
                             rows="4"
                             cols="50"
                             disabled="true"
                         ></textarea>
                     </div>
                     <div class="divTimeText">
-                        <p>Time</p>
+                        <p id="timeText">Time</p>
                     </div>
                 </li>
             </div>

@@ -107,12 +107,12 @@ label {
 
 .divInputText {
     width: 1250px;
-    height: 400px;
+    height: 360px;
 }
 .divInputText textarea {
     resize: none;
     width: 1250px;
-    height: 380px;
+    height: 340px;
     border-color: #585858;
     border-width: 0.1px;
     color: #333333;
@@ -131,7 +131,7 @@ label {
 .divOutputText textarea {
     resize: none;
     width: 1250px;
-    height: 380px;
+    height: 180px;
     border-color: #585858;
     border-width: 0.1px;
     color: #333333;
