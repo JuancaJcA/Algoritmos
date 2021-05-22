@@ -11,10 +11,15 @@
             rel="stylesheet"
             type="text/css"
         />
+        <!-- Scripts -->
+        <script
+            type="text/paperscript"
+            src="js/sort.js"
+            canvas="myCanvasSort"
+        ></script>
         <script type="text/javascript" src="js/paper-full.js"></script>
         <script src="js/jquery-3.4.1.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
-        <script src="js/sort.js"></script>
         <!-- Links -->
         <link
             rel="stylesheet"
@@ -72,7 +77,9 @@
                             name="inputText"
                             rows="4"
                             cols="50"
-                        >Numbers</textarea>
+                        >
+Numbers</textarea
+                        >
                     </div>
                     <div class="divOutputText">
                         <p>Numbers Sorted</p>
@@ -90,5 +97,7 @@
                 </li>
             </div>
         </div>
+        <!-- Canvas -->
+        <canvas id="myCanvasSort" resize></canvas>
     </body>
 </html>
