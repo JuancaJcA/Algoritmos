@@ -1,3 +1,109 @@
+var rows = 0;
+var columns = 0;
+
+function buildMatrix() {
+    if (rows != 0 && columns != 0) {
+        $("#matrix").empty();
+        var s = "";
+        for (let i = 0; i < rows; i++) {
+            s += "<div class='pure-g' style='padding-bottom:10px;'>";
+            for (let j = 0; j < columns; j++) {
+                s +=
+                    "<div class='pure-u-2-24'><input type='number' style='width:80px;' id='" +
+                    i +
+                    j +
+                    "'></div>";
+            }
+            s += "</div>";
+        }
+        $("#matrix").append(s);
+
+        $("#demand").empty();
+        var d =
+            "<legend>Demanda</legend><div class='pure-g' style='padding-bottom:10px;'>";
+        for (let i = 0; i < columns; i++) {
+            d +=
+                "<div class='pure-u-2-24'><input type='number' style='width:80px;' id='" +
+                i +
+                "'></div>";
+        }
+        d += "</div>";
+        $("#demand").append(d);
+
+        $("#supply").empty();
+        var m = "";
+        for (let i = 0; i < rows; i++) {
+            m +=
+                "<div class='pure-g' style='padding-bottom:10px;'><input type='number' style='width:80px;' id='" +
+                i +
+                "'></div>";
+        }
+        $("#supply").append(m);
+    }
+}
+
+function solve() {
+    if (columns != 0 && rows != 0) {
+        // Armar array
+        var demandaHTML = $("#demand").find("input");
+        var demanda = [];
+        for (let i = 0; i < columns; i++) {
+            if ($(demandaHTML[i]).val() === "") {
+                demanda.push(0);
+            } else {
+                demanda.push(parseInt($(demandaHTML[i]).val()));
+            }
+        }
+
+        var ofertaHTML = $("#supply").find("input");
+        var oferta = [];
+        for (let i = 0; i < rows; i++) {
+            if ($(ofertaHTML[i]).val() === "") {
+                oferta.push(0);
+            } else {
+                oferta.push(parseInt($(ofertaHTML[i]).val()));
+            }
+        }
+
+        var matrixHTML = $("#matrix").find("div.pure-g");
+        var matriz = []
+        for(let i = 0;i < rows; i++){
+            let rowHTML = $(matrixHTML[i]).find("input");
+            let rowArray = [];
+            for(let j = 0;j < columns;j++){
+                if ($(rowHTML[j]).val() === "") {
+                    rowArray.push(0);
+                } else {
+                    rowArray.push(parseInt($(rowHTML[j]).val()));
+                }
+            }
+            matriz.push(rowArray);
+        }
+        console.log(matriz);
+        console.log(demanda);
+        console.log(oferta);
+
+        var cramer = transporte(matriz,demanda,oferta);
+        console.log(cramer);
+        
+    }
+}
+$(document).ready(function () {
+    $("#columns").val("");
+    $("#rows").val("");
+    $("#columns").on("input change", function (e) {
+        columns = $(this).val();
+        buildMatrix();
+    });
+    $("#rows").on("input change", function (e) {
+        rows = $(this).val();
+        buildMatrix();
+    });
+    $("#solve").on("click", function (e) {
+        solve();
+    });
+});
+
 function transporte(matrix, demand, supply) {
     var matrix1 = matrix.map((arr) => arr.slice());
     var demand1 = [...demand];
@@ -141,7 +247,3 @@ function getCost(matrix, costs) {
 function clone2D(a) {
     return a.map((o) => [...o]);
 }
-
-$("columns").change(function(){
-    console.log($(this).val())
-});
