@@ -151,3 +151,13 @@ label {
     line-height: 20px;
     color: #585858;
 }
+
+.matrixContainer{
+    padding-top: 50px;
+    padding-left: 50px;
+}
+
+.cramerModal {
+    width: 1000px;
+    margin-left: 450px;
+}

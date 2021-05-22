@@ -4,9 +4,9 @@ var columns = 0;
 function buildMatrix() {
     if (rows != 0 && columns != 0) {
         $("#matrix").empty();
-        var s = "";
+        var s = "<legend>Matrix</legend>";
         for (let i = 0; i < rows; i++) {
-            s += "<div class='pure-g' style='padding-bottom:10px;'>";
+            s += "<div class='pure-g' style='padding-top:10px;'>";
             for (let j = 0; j < columns; j++) {
                 s +=
                     "<div class='pure-u-2-24'><input type='number' style='width:80px;' id='" +
@@ -20,7 +20,7 @@ function buildMatrix() {
 
         $("#demand").empty();
         var d =
-            "<legend>Demanda</legend><div class='pure-g' style='padding-bottom:10px;'>";
+            "<legend>Demand</legend><div class='pure-g' style='padding-top:10px;'>";
         for (let i = 0; i < columns; i++) {
             d +=
                 "<div class='pure-u-2-24'><input type='number' style='width:80px;' id='" +
@@ -31,10 +31,10 @@ function buildMatrix() {
         $("#demand").append(d);
 
         $("#supply").empty();
-        var m = "";
+        var m = "<legend>Availability</legend>";
         for (let i = 0; i < rows; i++) {
             m +=
-                "<div class='pure-g' style='padding-bottom:10px;'><input type='number' style='width:80px;' id='" +
+                "<div class='pure-g' style='padding-top:10px;'><input type='number' style='width:80px;' id='" +
                 i +
                 "'></div>";
         }
@@ -66,11 +66,11 @@ function solve() {
         }
 
         var matrixHTML = $("#matrix").find("div.pure-g");
-        var matriz = []
-        for(let i = 0;i < rows; i++){
+        var matriz = [];
+        for (let i = 0; i < rows; i++) {
             let rowHTML = $(matrixHTML[i]).find("input");
             let rowArray = [];
-            for(let j = 0;j < columns;j++){
+            for (let j = 0; j < columns; j++) {
                 if ($(rowHTML[j]).val() === "") {
                     rowArray.push(0);
                 } else {
@@ -79,15 +79,85 @@ function solve() {
             }
             matriz.push(rowArray);
         }
-        console.log(matriz);
-        console.log(demanda);
-        console.log(oferta);
 
-        var cramer = transporte(matriz,demanda,oferta);
-        console.log(cramer);
-        
+        var cramer = transporte(matriz, demanda, oferta);
+        var matrixNew = addValuesMatrix(matriz);
+        tabelajzingMatrix(matrixNew, "metaConfigTableCramer", "matrixCramer");
+        return cramer;
     }
 }
+
+function save() {
+    if (columns != 0 && rows != 0) {
+        // Armar array
+        var demandaHTML = $("#demand").find("input");
+        var demanda = [];
+        for (let i = 0; i < columns; i++) {
+            if ($(demandaHTML[i]).val() === "") {
+                demanda.push(0);
+            } else {
+                demanda.push(parseInt($(demandaHTML[i]).val()));
+            }
+        }
+
+        var ofertaHTML = $("#supply").find("input");
+        var oferta = [];
+        for (let i = 0; i < rows; i++) {
+            if ($(ofertaHTML[i]).val() === "") {
+                oferta.push(0);
+            } else {
+                oferta.push(parseInt($(ofertaHTML[i]).val()));
+            }
+        }
+
+        var matrixHTML = $("#matrix").find("div.pure-g");
+        var matriz = [];
+        for (let i = 0; i < rows; i++) {
+            let rowHTML = $(matrixHTML[i]).find("input");
+            let rowArray = [];
+            for (let j = 0; j < columns; j++) {
+                if ($(rowHTML[j]).val() === "") {
+                    rowArray.push(0);
+                } else {
+                    rowArray.push(parseInt($(rowHTML[j]).val()));
+                }
+            }
+            matriz.push(rowArray);
+        }
+
+        return {
+            matrix: matriz,
+            demand: demanda,
+            availability: oferta,
+        };
+    }
+}
+
+function importedSolve(matrix, demand, availability) {
+    var cramerArr = transporte(matrix, demand, availability);
+    var matrixNew = addValuesMatrix(matrix);
+    tabelajzingMatrix(matrixNew, "metaConfigTableCramer", "matrixCramer");
+
+    var cramerMax = addValuesMatrix(cramerArr.max);
+    var cramerMin = addValuesMatrix(cramerArr.min);
+
+    tabelajzingCramer(
+        cramerMax,
+        "Max ",
+        cramerArr.costMax,
+        "metaConfigTableCramerMax",
+        "matrixCramerMax"
+    );
+
+    tabelajzingCramer(
+        cramerMin,
+        "Min ",
+        cramerArr.costMin,
+        "metaConfigTableCramerMin",
+        "matrixCramerMin"
+    );
+}
+
 $(document).ready(function () {
     $("#columns").val("");
     $("#rows").val("");
@@ -100,9 +170,104 @@ $(document).ready(function () {
         buildMatrix();
     });
     $("#solve").on("click", function (e) {
-        solve();
+        var cramerArr = solve();
+        var cramerMax = addValuesMatrix(cramerArr.max);
+        var cramerMin = addValuesMatrix(cramerArr.min);
+
+        tabelajzingCramer(
+            cramerMax,
+            "Max ",
+            cramerArr.costMax,
+            "metaConfigTableCramerMax",
+            "matrixCramerMax"
+        );
+
+        tabelajzingCramer(
+            cramerMin,
+            "Min ",
+            cramerArr.costMin,
+            "metaConfigTableCramerMin",
+            "matrixCramerMin"
+        );
+    });
+    // Save Json
+    $("#saveCramer").on("click", function (e) {
+        var json = save();
+
+        var name;
+        while (!valueIsEmpty(name)) {
+            name = prompt("File name:");
+        }
+        downloadJson(JSON.stringify(json), name);
+    });
+    $("#importCramer").on("change", function (e) {
+        var reader = new FileReader();
+        reader.onload = function (event) {
+            var jsonObj = JSON.parse(event.target.result);
+            var matrix = jsonObj["matrix"];
+            var demand = jsonObj["demand"];
+            var availability = jsonObj["availability"];
+            importedSolve(matrix, demand, availability);
+        };
+        reader.readAsText(e.target.files[0]);
     });
 });
+
+function downloadJson(exportObj, exportName) {
+    var dataStr = "data:text/json;charset=utf-8," + exportObj;
+    var nodes = document.createElement("a");
+    nodes.setAttribute("href", dataStr);
+    nodes.setAttribute("download", exportName + ".json");
+    document.body.appendChild(nodes);
+    nodes.click();
+    nodes.remove();
+}
+
+function addValuesMatrix(array) {
+    var rowsName = [""];
+    var colsName = [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F",
+        "G",
+        "H",
+        "I",
+        "J",
+        "K",
+        "L",
+        "M",
+        "N",
+        "O",
+        "P",
+        "Q",
+        "R",
+        "S",
+        "T",
+        "U",
+        "V",
+        "W",
+        "X",
+        "Y",
+        "Z",
+    ];
+    var resultArray = [];
+    for (var i = 1; i <= array[0].length; i++) {
+        rowsName.push(i.toString());
+    }
+    resultArray.push(rowsName);
+
+    for (var i = 0; i < array.length; i++) {
+        var arr = [colsName[i]];
+        for (var j = 0; j < array[i].length; j++) {
+            arr.push(array[i][j]);
+        }
+        resultArray.push(arr);
+    }
+    return resultArray;
+}
 
 function transporte(matrix, demand, supply) {
     var matrix1 = matrix.map((arr) => arr.slice());
@@ -246,4 +411,42 @@ function getCost(matrix, costs) {
 
 function clone2D(a) {
     return a.map((o) => [...o]);
+}
+
+function tabelajzingCramer(a, txt, cost, tableName, titleName) {
+    var table = document.getElementById(tableName);
+    table.innerHTML = "";
+
+    var tr = "";
+    for (var i = 0; i < a.length; i++) {
+        var arr = a[i];
+        tr += "<tr>";
+        for (var c = 0; c < arr.length; c++) {
+            tr += "<td>" + arr[c] + "</td>";
+        }
+        tr += "</tr>";
+    }
+    table.innerHTML += tr;
+    document.getElementById(titleName).innerHTML = txt + "(Attr: " + cost + ")";
+}
+
+function tabelajzingMatrix(a, tableName, titleName) {
+    var table = document.getElementById(tableName);
+    table.innerHTML = "";
+
+    var tr = "";
+    for (var i = 0; i < a.length; i++) {
+        var arr = a[i];
+        tr += "<tr>";
+        for (var c = 0; c < arr.length; c++) {
+            tr += "<td>" + arr[c] + "</td>";
+        }
+        tr += "</tr>";
+    }
+    table.innerHTML += tr;
+    document.getElementById(titleName).innerHTML = "Matrix";
+}
+// Verify if the string is Empty.
+function valueIsEmpty(label) {
+    return label && label !== "";
 }

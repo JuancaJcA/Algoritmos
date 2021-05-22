@@ -42,18 +42,6 @@ $("#delete").click(function () {
     $("#add").removeClass();
     $("#rename").removeClass();
     $("#move").removeClass();
-
-    matrizCramer = [
-        [3, 1, 7, 4],
-        [2, 6, 5, 9],
-        [8, 3, 3, 2],
-    ];
-    demanda = [250, 350, 400, 200];
-    oferta = [300, 400, 500];
-
-    resultado = transporte(matrizCramer, demanda, oferta);
-    console.log(resultado);
-    tabelajzingCramer(resultado.max, "Max ", resultado.costMax);
 });
 
 // Rename.
@@ -934,24 +922,6 @@ function tabelajzingAssignmentMax(a, b) {
     table.innerHTML += tr;
     document.getElementById("assignmentCost3").innerHTML =
         "Assignment Matrix (Cost: " + cost + ")";
-}
-
-function tabelajzingCramer(a, txt, cost) {
-    var table = document.getElementById("metaConfigTableCramer");
-    table.innerHTML = "";
-
-    var tr = "";
-    for (var i = 0; i < a.length; i++) {
-        var arr = a[i];
-        tr += "<tr>";
-        for (var c = 0; c < arr.length; c++) {
-            tr += "<td>" + arr[c] + "</td>";
-        }
-        tr += "</tr>";
-    }
-    table.innerHTML += tr;
-    document.getElementById("matrixCramer").innerHTML =
-        "Cramer " + txt + "(Cost: " + cost + ")";
 }
 
 // Change color for Johnson Algorithm

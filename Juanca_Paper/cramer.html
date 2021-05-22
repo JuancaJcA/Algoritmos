@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
+        <!-- Title -->
+        <title>MyNODES</title>
         <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -12,22 +14,59 @@
             rel="stylesheet"
             type="text/css"
         />
-<!-- Scripts -->
+        <!-- Scripts -->
         <link
             rel="stylesheet"
             href="https://unpkg.com/purecss@2.0.6/build/pure-min.css"
             integrity="sha384-Uu6IeWbM+gzNVXJcM9XV3SohHtmWE+3VGi496jvgX1jyvDTXfdK+rfZc8C1Aehk5"
             crossorigin="anonymous"
         />
-        <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+        <script
+            src="https://code.jquery.com/jquery-3.6.0.js"
+            integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+            crossorigin="anonymous"
+        ></script>
         <script src="js/cramer.js"></script>
         <title>Cramer Algorithm</title>
     </head>
     <body>
-        <div id="mainContainer">
+        <!-- Header -->
+        <div class="header">
+            <div class="logo_container">
+                <img src="img/logo.png" alt="logo" />
+                <h1>MY<span>NODES</span></h1>
+
+                <!-- Menu Items -->
+                <li id="item">
+                    <span>
+                        <a href="#exCramer" id="solve" rel="modal:open"
+                            >Solve</a
+                        >
+                    </span>
+                    <span>
+                        <a href="#" id="saveCramer">Save</a>
+                    </span>
+                    <span>
+                        <label>
+                            Import
+                            <input
+                                type="file"
+                                name="importCramer"
+                                id="importCramer"
+                                style="visibility: hidden"
+                                accept=".json"
+                            />
+                        </label>
+                    </span>
+                </li>
+            </div>
+        </div>
+        <!-- Matrix -->
+        <div id="mainContainer" class="matrixContainer">
             <form class="pure-form" id="matrixSize">
-                <input type="number" name="rows" id="rows">
-                <input type="number" name="columns" id="columns">
+                <legend>Rows | Columns</legend>
+                <input type="number" name="rows" id="rows"/>
+                <input type="number" name="columns" id="columns"/>
             </form>
             <form class="pure-form" id="matrixData">
                 <div class="pure-g">
@@ -36,8 +75,50 @@
                 </div>
                 <div id="demand" class="pure-u-2-3"></div>
             </form>
-            <button id="solve" class="pure-button">Solve</button>
+            <!-- <button id="solve" class="pure-button">Solve</button> -->
         </div>
-<!-- Canvas -->
+        <!-- Matrix -->
+        <div id="exCramer" class="cramerModal">
+            <!-- Original Table -->
+            <p id="matrixCramer" style="font-size: 25px"></p>
+            <p style="font-size: 25px; color: #fff">-</p>
+            <table id="metaConfigTableCramer"></table>
+            <style>
+                #metaConfigTableCramer td:first-child {
+                    background: #eeeeee;
+                }
+
+                #metaConfigTableCramer tr:first-child {
+                    background: #eeeeee;
+                }
+            </style>
+            <!-- Table 1 -->
+            <p id="matrixCramerMax" style="font-size: 25px; margin-top: 25px;"></p>
+            <p style="font-size: 25px; color: #fff">-</p>
+            <table id="metaConfigTableCramerMax"></table>
+            <style>
+                #metaConfigTableCramerMax td:first-child {
+                    background: #eeeeee;
+                }
+
+                #metaConfigTableCramerMax tr:first-child {
+                    background: #eeeeee;
+                }
+            </style>
+            <!-- Table 2 -->
+            <p id="matrixCramerMin" style="font-size: 25px; margin-top: 25px;"></p>
+            <p style="font-size: 25px; color: #fff">-</p>
+            <table id="metaConfigTableCramerMin"></table>
+            <style>
+                #metaConfigTableCramerMin td:first-child {
+                    background: #eeeeee;
+                }
+
+                #metaConfigTableCramerMin tr:first-child {
+                    background: #eeeeee;
+                }
+            </style>
+        </div>
+        <!-- Canvas -->
     </body>
 </html>
